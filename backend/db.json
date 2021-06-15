@@ -1,0 +1,50 @@
+{
+    "compromissos": [
+        {
+            "id": 1,
+            "title": "Almoço",
+            "start": "2021-06-15T12:00:00",
+            "end": "2021-06-15T13:00:00",
+            "backgroundColor": "tomato",
+            "borderColor": "white"
+        },
+        {
+            "id": 2,
+            "title": "Remédio Controlado",
+            "date": "2021-06-16T10:00:00",
+            "backgroundColor": "cyan",
+            "borderColor": "white"
+        },
+        {
+            "id": 3,
+            "title": "Ir ao banco",
+            "date": "2021-06-17T15:00:00",
+            "backgroundColor": "#5AC9E9",
+            "borderColor": "white"
+        },
+        {
+            "id": 4,
+            "groupId": "reunioes_alinhamento",
+            "title": "Reunião de alinhamento",
+            "date": "2021-06-17T16:00:00",
+            "backgroundColor": "#86EE3F",
+            "borderColor": "black"
+        },
+        {
+            "id": 5,
+            "groupId": "reunioes_alinhamento",
+            "title": "Reunião de alinhamento",
+            "date": "2021-06-18T16:00:00",
+            "backgroundColor": "#86EE3F",
+            "borderColor": "black"
+        },
+        {
+            "id": 6,
+            "groupId": "reunioes_alinhamento",
+            "title": "Reunião de alinhamento",
+            "date": "2021-06-121T16:00:00",
+            "backgroundColor": "#86EE3F",
+            "borderColor": "black"
+        }
+    ]
+}
