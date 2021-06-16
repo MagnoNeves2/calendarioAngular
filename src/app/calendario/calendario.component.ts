@@ -4,6 +4,7 @@ import { CalendarOptions, DateSelectArg, EventClickArg, EventInput, EventSourceI
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Compromissos } from '../model/Compromissos';
 import { CompromissosService } from '../service/compromissos.service';
+import { salve } from './retorno-api'
 
 @Component({
   selector: 'app-calendario',
@@ -63,16 +64,18 @@ export class CalendarioComponent implements OnInit {
 
   }
 
-  listarCompromissos() {
+  listarCompromissos(): EventSourceInput {
+    let retorno: EventSourceInput;
     this.service.listaDeCompromissos().subscribe((resp: Compromissos[]) => {
       let teste = new Compromissos;
-      let retorno = teste.toModel(resp);
+      retorno = teste.toModel(resp);
       this.listaMock = retorno;
       // this.listaCompromissos = resp;
       // this.criarListaEventos();
-      // console.log(this.listaCompromissos);
-    })
-    
+      console.log(retorno);
+    });
+
+    return retorno;
   }
 
   calendarOptions: CalendarOptions = {
@@ -116,7 +119,26 @@ export class CalendarioComponent implements OnInit {
       minute: '2-digit'
     },
     selectOverlap: false,
-    events: this.listaMock,
+    events: (info, successCallback, failureCallback) => { 
+      this.service.listaDeCompromissos().subscribe((resp: Compromissos[]) => {
+        let eventos: EventInput[] = [];
+        resp.forEach((compromisso) => {
+          let evento:EventInput = {
+            id: compromisso.id.toString(),
+            start: compromisso.start,
+            end: compromisso.end,
+            title: compromisso.title,
+            date: compromisso.date,
+            backgroundColor: compromisso.backgroundColor,
+            borderColor: compromisso.borderColor,
+            groupId: compromisso.groupId,
+          }
+
+          eventos.push(evento);
+        })
+        successCallback(eventos);
+      })
+     },
     timeZone: "America/Sao_Paulo",
     slotDuration: '00:15:00',
     nowIndicator: true,

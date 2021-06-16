@@ -6,21 +6,22 @@
             "start": "2021-06-15T12:00:00",
             "end": "2021-06-15T13:00:00",
             "backgroundColor": "tomato",
-            "borderColor": "white"
+            "borderColor": "tomato"
         },
         {
             "id": 2,
             "title": "Remédio Controlado",
-            "date": "2021-06-16T10:00:00",
+            "start": "2021-06-16T10:00:00",
+            "end": "2021-06-16T11:00:00",
             "backgroundColor": "cyan",
-            "borderColor": "white"
+            "borderColor": "cyan"
         },
         {
             "id": 3,
             "title": "Ir ao banco",
             "date": "2021-06-17T15:00:00",
             "backgroundColor": "#5AC9E9",
-            "borderColor": "white"
+            "borderColor": "#5AC9E9"
         },
         {
             "id": 4,
@@ -28,7 +29,7 @@
             "title": "Reunião de alinhamento",
             "date": "2021-06-17T16:00:00",
             "backgroundColor": "#86EE3F",
-            "borderColor": "black"
+            "borderColor": "#86EE3F"
         },
         {
             "id": 5,
@@ -36,7 +37,7 @@
             "title": "Reunião de alinhamento",
             "date": "2021-06-18T16:00:00",
             "backgroundColor": "#86EE3F",
-            "borderColor": "black"
+            "borderColor": "#86EE3F"
         },
         {
             "id": 6,
@@ -44,7 +45,7 @@
             "title": "Reunião de alinhamento",
             "date": "2021-06-121T16:00:00",
             "backgroundColor": "#86EE3F",
-            "borderColor": "black"
+            "borderColor": "#86EE3F"
         }
     ]
 }
