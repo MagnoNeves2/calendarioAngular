@@ -7,6 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin
 import listPlugin from '@fullcalendar/list'; // a plugin
 import timeGridPlugin from '@fullcalendar/timegrid'; // a plugin
+import rrulePlugin from '@fullcalendar/rrule';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +20,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin,
   listPlugin,
-  timeGridPlugin
+  timeGridPlugin,
+  rrulePlugin
 ]);
 
 @NgModule({

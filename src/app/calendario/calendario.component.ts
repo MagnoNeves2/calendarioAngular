@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CalendarOptions, DateSelectArg, EventClickArg, EventInput, EventSourceInput } from '@fullcalendar/angular'; // useful for typechecking
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import RRule from 'rrule';
 import { Compromissos } from '../model/Compromissos';
 import { CompromissosService } from '../service/compromissos.service';
 import { salve } from './retorno-api'
@@ -19,21 +20,35 @@ export class CalendarioComponent implements OnInit {
 
   closeResult = '';
 
-  teste!: string;
+  teste = new RRule({
+    freq: RRule.WEEKLY,
+    // interval: 2,
+    byweekday: [RRule.TH, RRule.TU],
+    dtstart: new Date('2021-07-01T12:00:00Z'), // will also accept '20120201T103000'
+    until: new Date('2021-07-30T14:00:00Z'),
+  });
 
   listaCompromissos: Compromissos[] = [];
 
-  evento: EventSourceInput = [{
-    id: "Teste",
-    date: "2021-06-15T13:00:00"
-  }];
-
-  listaMock: EventSourceInput = [
+  listaMock: EventInput = [
     {
       title: 'Reunião Agendada Automaticamente',
-      date: '2021-06-15',
+      // date: '2021-06-15',
       backgroundColor: 'tomato',
-      borderColor: 'white'
+      borderColor: 'white',
+      rrule: {
+        freq: 'weekly',
+        // interval: 2,
+        byweekday: ['mo', 'fr'],
+        dtstart: '2021-07-01T13:00:00Z', // will also accept '20120201T103000'
+        until: '2021-07-30',
+        // byhour: [13, 14],
+        byminute: 30,
+        tzid: 'America/Sao_Paulo'
+      },
+      allDay: false,
+      // end: '2021-07-02T15:00:00Z'
+      // duration: '00:30:00',
     },
     {
       title: 'Reunião Agendada Automaticamente',
@@ -43,11 +58,12 @@ export class CalendarioComponent implements OnInit {
     },
     {
       title: 'Remedio',
-      start: '2021-06-17T12:00',
-      end: '2021-06-17T13:00',
+      // start: '2021-06-17T12:00',
+      // end: '2021-06-17T13:00',
       backgroundColor: "#86EE3F",
       borderColor: "white",
-      textColor: "black"
+      textColor: "black",
+      rrule: this.teste.toString(),
     },
   ]
 
@@ -60,22 +76,6 @@ export class CalendarioComponent implements OnInit {
       titulo: [null]
     });
 
-    this.listarCompromissos();
-
-  }
-
-  listarCompromissos(): EventSourceInput {
-    let retorno: EventSourceInput;
-    this.service.listaDeCompromissos().subscribe((resp: Compromissos[]) => {
-      let teste = new Compromissos;
-      retorno = teste.toModel(resp);
-      this.listaMock = retorno;
-      // this.listaCompromissos = resp;
-      // this.criarListaEventos();
-      console.log(retorno);
-    });
-
-    return retorno;
   }
 
   calendarOptions: CalendarOptions = {
@@ -119,11 +119,11 @@ export class CalendarioComponent implements OnInit {
       minute: '2-digit'
     },
     selectOverlap: false,
-    events: (info, successCallback, failureCallback) => { 
+    events: (info, successCallback, failureCallback) => {
       this.service.listaDeCompromissos().subscribe((resp: Compromissos[]) => {
         let eventos: EventInput[] = [];
         resp.forEach((compromisso) => {
-          let evento:EventInput = {
+          let evento: EventInput = {
             id: compromisso.id.toString(),
             start: compromisso.start,
             end: compromisso.end,
@@ -135,14 +135,20 @@ export class CalendarioComponent implements OnInit {
           }
 
           eventos.push(evento);
-        })
+        });
+        for (let index = 0; index <= 2; index++) {
+          eventos.push(this.listaMock[index]);
+        }
+        console.log(eventos);
+
         successCallback(eventos);
       })
-     },
+    },
     timeZone: "America/Sao_Paulo",
     slotDuration: '00:15:00',
     nowIndicator: true,
     navLinks: true,
+    allDaySlot: false,
 
 
 
@@ -215,13 +221,11 @@ export class CalendarioComponent implements OnInit {
 
       lista.push(evento);
     });
-
-    let retorno: EventSourceInput = lista
+    // let retorno: EventSourceInput = lista
     // console.log(retorno);
     // console.log(this.listaCompromissos);
-    
 
-    return retorno;
+    return lista;
   }
 
 
